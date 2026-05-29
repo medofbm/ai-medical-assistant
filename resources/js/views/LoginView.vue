@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+  <div class="min-h-screen flex overflow-y-auto bg-[#eef2f7] dark:bg-slate-950 transition-colors duration-300">
 
     <!-- ── Left Branding Panel (hidden on mobile) ───────────────────── -->
     <div class="hidden lg:flex flex-col justify-between w-[52%] relative overflow-hidden

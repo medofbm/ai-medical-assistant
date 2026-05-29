@@ -21,7 +21,7 @@ class GeminiMedicalService
      */
     public function sendMessage(User $user, int $chatSessionId, string $userMessage): string
     {
-        $apiKey   = config('services.gemini.key', '');
+        $apiKey = config('services.gemini.key', '');
         $endpoint = config(
             'services.gemini.endpoint',
             'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent'
@@ -43,14 +43,14 @@ class GeminiMedicalService
         // ── 2. Map DB rows → Gemini multi-turn format ────────────────────────────────────────
         //   DB sender "user"  → Gemini role "user"
         //   DB sender "ai"    → Gemini role "model"
-        $contents = $history->map(fn ($msg) => [
-            'role'  => $msg->sender === 'user' ? 'user' : 'model',
+        $contents = $history->map(fn($msg) => [
+            'role' => $msg->sender === 'user' ? 'user' : 'model',
             'parts' => [['text' => $msg->message_text]],
         ])->values()->all();
 
         // ── 3. Append the NEW user message at the end ─────────────────────────────────────────
         $contents[] = [
-            'role'  => 'user',
+            'role' => 'user',
             'parts' => [['text' => $userMessage]],
         ];
 
@@ -61,10 +61,10 @@ class GeminiMedicalService
             'system_instruction' => [
                 'parts' => [['text' => $this->buildSystemPrompt($user)]],
             ],
-            'contents'           => $contents,
-            'generationConfig'   => [
-                'temperature'     => 0.7,
-                'topP'            => 0.95,
+            'contents' => $contents,
+            'generationConfig' => [
+                'temperature' => 0.7,
+                'topP' => 0.95,
                 'maxOutputTokens' => 2048,
             ],
         ];
@@ -88,7 +88,7 @@ class GeminiMedicalService
         } else {
             Log::error('GeminiMedicalService: API error', [
                 'status' => $response->status(),
-                'body'   => $response->body(),
+                'body' => $response->body(),
             ]);
         }
 
@@ -117,7 +117,7 @@ You are 'MediAssist', an elite, highly professional AI Medical Assistant. Your s
 ### STRICT RULES & BOUNDARIES:
 1. **DOMAIN RESTRICTION (CRITICAL)**: You MUST strictly refuse to answer ANY questions that are NOT related to health, medicine, or the patient's medical profile. If asked about programming, general knowledge, politics, or non-medical topics, reply politely and briefly: "أعتذر، بصفتي مساعداً طبياً (MediAssist)، نطاق عملي يقتصر على الاستشارات الطبية والصحية فقط. 🩺"
 2. **BE CONCISE & DIRECT**: Avoid unnecessary fluff, long introductions, or filler text. Give direct, evidence-based medical information efficiently. Avoid repeating the user's question.
-3. **PROFESSIONAL FORMATTING**: ALWAYS structure your response clearly using Markdown (headings `###`, bullet points `-`, and bold text `**`). Use appropriate medical emojis professionally to improve readability (e.g., 🩺, 💊, ⚕️, ⚠️, 📋, 💧).
+3. **PROFESSIONAL FORMATTING & EMOJIS**: Structure your response with Markdown (headings `###`, bullet points `-`, and bold text `**`). Use medical emojis (e.g., 🩺, 💊, 📋, ⚠️, 🧠, 🩸) **sparingly and strategically**—place them at the beginning of headings or bullet points to enhance readability. DO NOT scatter emojis randomly in the middle of sentences. Keep the aesthetic clean, reassuring, and strictly professional.
 4. **PERSONALIZATION**: ALWAYS analyze the user's symptoms in the context of their Patient Medical Profile (e.g., consider their age, weight, and chronic diseases).
 5. **LIMITATIONS**: NEVER prescribe prescription-only medications. You may recommend safe over-the-counter (OTC) remedies or home care.
 6. **DISCLAIMER**: ALWAYS end your response with a brief, professional disclaimer emphasizing that you are an AI assistant and they should consult a real doctor for emergencies (e.g., "⚠️ *ملاحظة: هذا تقييم مبدئي مبني على الذكاء الاصطناعي، يُرجى استشارة طبيب مختص للتأكد.*").

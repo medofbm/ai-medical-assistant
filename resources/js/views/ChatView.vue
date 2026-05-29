@@ -17,6 +17,10 @@
       :loading-messages="loadingMessages"
       :ai-thinking="aiThinking"
       @message-sent="sendMessage"
+      @new-chat-with-message="createNewSessionAndSend"
+      @session-deleted="handleSessionDeleted"
+      @session-renamed="handleSessionRenamed"
+      @session-pinned="handleSessionPinned"
     />
 
     <!-- Onboarding Modal -->
@@ -104,6 +108,13 @@ watch(activeSession, (newSession) => {
 
 // ─── Methods ─────────────────────────────────────────────────────────────────
 
+function sortSessions() {
+    sessions.value.sort((a, b) => {
+        if (a.is_pinned !== b.is_pinned) return b.is_pinned ? 1 : -1;
+        return new Date(b.updated_at) - new Date(a.updated_at);
+    });
+}
+
 async function fetchSessions() {
     loadingSessions.value = true;
     try {
@@ -119,10 +130,29 @@ async function fetchSessions() {
 async function createNewSession() {
     try {
         const { data } = await apiClient.post('/chat', { title: 'New Chat' });
-        sessions.value.unshift(data.session);
+        sessions.value.push(data.session);
+        sortSessions();
         await selectSession(data.session);
     } catch (err) {
         console.error('Failed to create session:', err);
+    }
+}
+
+/**
+ * Called when user clicks a suggestion chip on the welcome/empty screen.
+ * Creates a new session (if not already active) then sends the message.
+ */
+async function createNewSessionAndSend(text) {
+    try {
+        if (!activeSession.value) {
+            const { data } = await apiClient.post('/chat', { title: 'New Chat' });
+            sessions.value.push(data.session);
+            sortSessions();
+            await selectSession(data.session);
+        }
+        await sendMessage(text);
+    } catch (err) {
+        console.error('Failed to create session and send:', err);
     }
 }
 
@@ -132,6 +162,35 @@ function handleSessionDeleted(deletedId) {
         activeSession.value = null;
         messages.value      = [];
         router.replace({ name: 'chat' });
+    }
+}
+
+async function handleSessionRenamed({ id, title }) {
+    try {
+        await apiClient.patch(`/chat/sessions/${id}/rename`, { title });
+        const si = sessions.value.findIndex((s) => s.id === id);
+        if (si !== -1) sessions.value[si] = { ...sessions.value[si], title };
+        if (activeSession.value?.id === id) {
+            activeSession.value = { ...activeSession.value, title };
+        }
+    } catch (err) {
+        console.error('Failed to rename session:', err);
+    }
+}
+
+async function handleSessionPinned(id) {
+    try {
+        const { data } = await apiClient.patch(`/chat/sessions/${id}/pin`);
+        const si = sessions.value.findIndex((s) => s.id === id);
+        if (si !== -1) {
+            sessions.value[si] = { ...sessions.value[si], is_pinned: data.is_pinned };
+            sortSessions();
+        }
+        if (activeSession.value?.id === id) {
+            activeSession.value = { ...activeSession.value, is_pinned: data.is_pinned };
+        }
+    } catch (err) {
+        console.error('Failed to pin session:', err);
     }
 }
 
@@ -185,18 +244,17 @@ async function sendMessage(text) {
         // Append the AI response.
         messages.value.push(data.ai_message);
 
-        // Update session title if it changed.
+        // Update session title and updated_at
         if (data.session_title && data.session_title !== activeSession.value.title) {
             activeSession.value = { ...activeSession.value, title: data.session_title };
             const si = sessions.value.findIndex((s) => s.id === activeSession.value.id);
-            if (si !== -1) sessions.value[si] = { ...sessions.value[si], title: data.session_title };
+            if (si !== -1) sessions.value[si].title = data.session_title;
         }
 
-        // Move session to top of list.
         const si = sessions.value.findIndex((s) => s.id === activeSession.value.id);
-        if (si > 0) {
-            const [s] = sessions.value.splice(si, 1);
-            sessions.value.unshift(s);
+        if (si !== -1) {
+            sessions.value[si].updated_at = new Date().toISOString();
+            sortSessions();
         }
 
     } catch (err) {

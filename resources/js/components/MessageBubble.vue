@@ -6,7 +6,8 @@
     <div class="max-w-[78%]">
       <div class="px-4 py-3 rounded-2xl rounded-ee-sm
                   bg-gradient-to-br from-blue-600 to-blue-700
-                  text-white text-sm shadow-lg shadow-blue-500/20 leading-relaxed text-start">
+                  text-white text-sm shadow-lg shadow-blue-500/20 leading-relaxed text-start
+                  break-words whitespace-pre-wrap">
         {{ message.message_text }}
       </div>
       <p class="text-xs text-slate-400 dark:text-slate-500 mt-1 text-end
@@ -55,7 +56,7 @@
         -->
         <div
           dir="auto"
-          class="prose prose-sm max-w-none text-start
+          class="prose prose-sm max-w-none text-start break-words
                  dark:prose-invert
                  prose-p:leading-relaxed prose-p:my-1
                  prose-headings:text-teal-700 dark:prose-headings:text-teal-400

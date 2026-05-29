@@ -86,6 +86,24 @@ class AuthController extends Controller
         return response()->json(['message' => 'Logged out successfully.']);
     }
 
+    /**
+     * Permanently delete the authenticated user's account and all associated data.
+     * Revokes all tokens, deletes chat sessions, messages, then the user record.
+     */
+    public function deleteAccount(Request $request): JsonResponse
+    {
+        /** @var User $user */
+        $user = $request->user();
+
+        // Revoke all tokens first
+        $user->tokens()->delete();
+
+        // Delete the user (cascade will handle related data via DB constraints)
+        $user->delete();
+
+        return response()->json(['message' => 'Account deleted successfully.']);
+    }
+
     // ─── Private ─────────────────────────────────────────────────────────────
 
     private function pickUserFields(User $user): array

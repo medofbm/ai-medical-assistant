@@ -18,6 +18,13 @@ const translations = {
         disclaimer:        'MediAssist AI can make mistakes. Always verify with a healthcare professional.',
         aiThinking:        'MediAssist is analyzing…',
         send:              'Send',
+        // Session menu
+        sessionOptions:    'Options',
+        pin:               'Pin conversation',
+        unpin:             'Unpin conversation',
+        rename:            'Rename',
+        deleteSession:     'Delete conversation',
+        save:              'Save',
         // Profile
         medicalProfile:    'Medical Profile',
         profileSubtitle:   'Your information helps MediAssist give you personalized medical guidance',
@@ -31,6 +38,15 @@ const translations = {
         chronicPlaceholder:'e.g. Type 2 Diabetes, Hypertension…',
         saveChanges:       'Save Changes',
         saving:            'Saving…',
+        cancel:            'Cancel',
+        // Danger zone
+        dangerZone:                'Danger Zone',
+        deleteAccountTitle:        'Delete Account',
+        deleteAccountDesc:         'Permanently removes all your data and cannot be undone.',
+        deleteAccountConfirmTitle: 'This action cannot be undone',
+        deleteAccountConfirmBody:  'All your consultations, messages, and medical profile will be permanently deleted. Are you absolutely sure?',
+        confirmDelete:             'Yes, delete it',
+        deleting:                  'Deleting…',
         profileSaved:      'Profile updated successfully!',
         backToChat:        'Back to Chat',
         // Auth
@@ -48,11 +64,14 @@ const translations = {
         haveAccount:       'Already have an account?',
         signIn:            'Sign in',
         medicalProfileOptional: 'Medical Profile (Optional)',
-        // Suggestions
-        suggestionFever:   '🤒 I have a headache and fever',
-        suggestionCold:    '💊 What are common cold remedies?',
-        suggestionHeart:   '❤️ Tips for heart health',
-        suggestionSleep:   '😴 I have trouble sleeping',
+        // Suggestions (emoji added in component)
+        suggestionFever:   'I have a headache and fever',
+        suggestionCold:    'What are common cold remedies?',
+        suggestionHeart:   'Tips for heart health',
+        suggestionSleep:   'I have trouble sleeping',
+        // Empty new-chat screen
+        newChatTitle:      'How can I help you today?',
+        newChatHint:       'Describe your symptoms or ask a health question below.',
         // Onboarding modal
         completeProfile:   'Complete Your Medical Profile',
         onboardingSubtitle:'Help MediAssist give you personalized advice.',
@@ -113,6 +132,13 @@ const translations = {
         disclaimer:        'قد يُخطئ مساعد ميدي. تحقق دائماً مع متخصص رعاية صحية.',
         aiThinking:        'يحلل مساعد ميدي…',
         send:              'إرسال',
+        // Session menu
+        sessionOptions:    'خيارات',
+        pin:               'تثبيت المحادثة',
+        unpin:             'إلغاء التثبيت',
+        rename:            'إعادة التسمية',
+        deleteSession:     'حذف المحادثة',
+        save:              'حفظ',
         // Profile
         medicalProfile:    'الملف الطبي',
         profileSubtitle:   'تساعد معلوماتك مساعد ميدي في تقديم توجيهات طبية مخصصة',
@@ -128,6 +154,15 @@ const translations = {
         saving:            'جارٍ الحفظ…',
         profileSaved:      'تم تحديث الملف الشخصي بنجاح!',
         backToChat:        'العودة إلى المحادثة',
+        cancel:            'إلغاء',
+        // Danger zone
+        dangerZone:                'منطقة الخطر',
+        deleteAccountTitle:        'حذف الحساب',
+        deleteAccountDesc:         'يحذف جميع بياناتك نهائياً ولا يمكن التراجع عن هذا الإجراء.',
+        deleteAccountConfirmTitle: 'لا يمكن التراجع عن هذا الإجراء',
+        deleteAccountConfirmBody:  'سيتم حذف جميع استشاراتك ورسائلك وملفك الطبي نهائياً. هل أنت متأكد تماماً؟',
+        confirmDelete:             'نعم، احذف الحساب',
+        deleting:                  'جارٍ الحذف…',
         // Auth
         login:             'تسجيل الدخول',
         loginSubtitle:     'مرحباً بعودتك إلى مساعد ميدي الذكي',
@@ -143,11 +178,14 @@ const translations = {
         haveAccount:       'هل لديك حساب بالفعل؟',
         signIn:            'تسجيل الدخول',
         medicalProfileOptional: 'الملف الطبي (اختياري)',
-        // Suggestions
-        suggestionFever:   '🤒 أعاني من صداع وحمى',
-        suggestionCold:    '💊 ما علاجات البرد الشائعة؟',
-        suggestionHeart:   '❤️ نصائح لصحة القلب',
-        suggestionSleep:   '😴 أعاني من مشكلة في النوم',
+        // Suggestions (emoji added in component)
+        suggestionFever:   'أعاني من صداع وحمى',
+        suggestionCold:    'ما علاجات البرد الشائعة؟',
+        suggestionHeart:   'نصائح لصحة القلب',
+        suggestionSleep:   'أعاني من مشكلة في النوم',
+        // Empty new-chat screen
+        newChatTitle:      'كيف يمكنني مساعدتك اليوم؟',
+        newChatHint:       'صف أعراضك أو اطرح سؤالاً طبياً في الأسفل.',
         // Onboarding modal
         completeProfile:   'أكمل ملفك الطبي',
         onboardingSubtitle:'ساعد مساعد ميدي في تقديم نصائح مخصصة لك.',

@@ -23,8 +23,9 @@ class ChatController extends Controller
     {
         $sessions = $request->user()
             ->chatSessions()
+            ->orderByDesc('is_pinned')
             ->orderBy('updated_at', 'desc')
-            ->get(['id', 'title', 'created_at', 'updated_at']);
+            ->get(['id', 'title', 'is_pinned', 'created_at', 'updated_at']);
 
         return response()->json(['sessions' => $sessions]);
     }
@@ -158,5 +159,42 @@ class ChatController extends Controller
         $session->delete();
 
         return response()->json(['message' => 'Chat session deleted successfully.']);
+    }
+    /**
+     * Rename a chat session title.
+     */
+    public function rename(Request $request, int $id): JsonResponse
+    {
+        $session = ChatSession::where('id', $id)
+            ->where('user_id', $request->user()->id)
+            ->firstOrFail();
+
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+        ]);
+
+        $session->update(['title' => $validated['title']]);
+
+        return response()->json([
+            'message' => 'Session renamed successfully.',
+            'session' => $session->only(['id', 'title', 'is_pinned']),
+        ]);
+    }
+
+    /**
+     * Toggle the pinned state of a chat session.
+     */
+    public function togglePin(Request $request, int $id): JsonResponse
+    {
+        $session = ChatSession::where('id', $id)
+            ->where('user_id', $request->user()->id)
+            ->firstOrFail();
+
+        $session->update(['is_pinned' => ! $session->is_pinned]);
+
+        return response()->json([
+            'message'   => 'Pin status updated.',
+            'is_pinned' => $session->is_pinned,
+        ]);
     }
 }

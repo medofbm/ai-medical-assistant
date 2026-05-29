@@ -4,13 +4,15 @@
     No need to force dir="ltr" here anymore.
   -->
   <aside class="flex flex-col w-72 shrink-0 h-screen overflow-hidden
-                bg-slate-50 dark:bg-slate-900
-                border-r border-slate-200 dark:border-white/[0.06]
-                transition-colors duration-300">
+                bg-[#f8fafc] dark:bg-slate-900
+                border-r border-[#dde3ea] dark:border-white/[0.06]
+                transition-colors duration-300"
+         style="box-shadow: 1px 0 0 #e2e8f0;">
 
     <!-- ── Header ───────────────────────────────────────────────────────── -->
     <div class="flex items-center justify-between px-4 py-3.5 shrink-0
-                border-b border-slate-200 dark:border-white/[0.06]">
+                border-b border-[#dde3ea] dark:border-white/[0.06]
+                bg-white dark:bg-slate-900/0">
       <div class="flex items-center gap-2">
         <div class="w-7 h-7 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500
                     flex items-center justify-center shadow-lg shadow-teal-500/30 shrink-0">
@@ -130,8 +132,8 @@
         :class="[
           'flex items-center gap-2 px-2 py-2 rounded-xl transition-all duration-200 group cursor-pointer',
           activeSessionId === session.id
-            ? 'bg-teal-50 dark:bg-teal-500/15 border border-teal-200 dark:border-teal-500/25'
-            : 'border border-transparent hover:bg-slate-100 dark:hover:bg-white/[0.04] hover:border-slate-200 dark:hover:border-white/[0.06]',
+            ? 'bg-white dark:bg-teal-500/15 border border-[#dde3ea] dark:border-teal-500/25 shadow-sm'
+            : 'border border-transparent hover:bg-white/70 dark:hover:bg-white/[0.04] hover:border-[#dde3ea] dark:hover:border-white/[0.06]',
         ]"
         @click="$emit('selectSession', session)"
       >
@@ -148,12 +150,17 @@
         </div>
 
         <div class="min-w-0 flex-1">
-          <p :class="[
-            'text-xs font-medium truncate leading-tight',
-            activeSessionId === session.id
-              ? 'text-teal-700 dark:text-teal-200'
-              : 'text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white',
-          ]">{{ session.title }}</p>
+          <div class="flex items-center gap-1.5">
+            <svg v-if="session.is_pinned" class="w-3 h-3 shrink-0 text-teal-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+            </svg>
+            <p :class="[
+              'text-xs font-medium truncate leading-tight flex-1',
+              activeSessionId === session.id
+                ? 'text-teal-700 dark:text-teal-200'
+                : 'text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white',
+            ]">{{ session.title }}</p>
+          </div>
           <p class="text-xs mt-0.5 text-slate-400 dark:text-slate-600">{{ formatDate(session.updated_at) }}</p>
         </div>
 

@@ -28,7 +28,8 @@ Route::prefix('auth')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
 
     // Auth
-    Route::post('/auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
+    Route::post('/auth/logout',          [AuthController::class, 'logout'])->name('auth.logout');
+    Route::delete('/auth/delete-account',[AuthController::class, 'deleteAccount'])->name('auth.delete');
 
     // User Medical Profile
     Route::prefix('profile')->group(function () {
@@ -43,5 +44,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{chatSession}/messages',            [ChatController::class, 'messages'])->name('chat.messages');
         Route::post('/{chatSession}/messages',           [ChatController::class, 'sendMessage'])->name('chat.sendMessage');
         Route::delete('/sessions/{id}',                  [ChatController::class, 'destroy'])->name('chat.destroy');
+        Route::patch('/sessions/{id}/rename',            [ChatController::class, 'rename'])->name('chat.rename');
+        Route::patch('/sessions/{id}/pin',               [ChatController::class, 'togglePin'])->name('chat.pin');
     });
 });

@@ -22,16 +22,16 @@
 @layer utilities {
     .scrollbar-thin {
         scrollbar-width: thin;
-        scrollbar-color: rgba(71, 85, 105, 0.4) transparent;
+        scrollbar-color: rgba(148, 163, 184, 0.5) transparent;
     }
     .scrollbar-thin::-webkit-scrollbar          { width: 4px; }
     .scrollbar-thin::-webkit-scrollbar-track    { background: transparent; }
     .scrollbar-thin::-webkit-scrollbar-thumb    {
-        background-color: rgba(71, 85, 105, 0.4);
+        background-color: rgba(148, 163, 184, 0.5);
         border-radius: 2px;
     }
     .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-        background-color: rgba(100, 116, 139, 0.6);
+        background-color: rgba(100, 116, 139, 0.7);
     }
 
     /* Bouncing dots for AI typing indicator */
@@ -45,13 +45,29 @@
         0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
         30%            { transform: translateY(-6px); opacity: 1; }
     }
+
+    /* ── Light-mode card elevation ── */
+    .card-light {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 1px 3px rgba(15,23,42,0.06), 0 6px 24px rgba(15,23,42,0.04);
+    }
+    /* Light-mode sidebar feel */
+    .sidebar-light {
+        background: #f8fafc;
+        border-right: 1px solid #e2e8f0;
+    }
 }
 
 /* ─── Base Styles ────────────────────────────────────────────────── */
 @layer base {
-    html, body, #app {
+    html, body {
         height: 100%;
-        overflow: hidden;
+    }
+    #app {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
     }
     * { box-sizing: border-box; }
 
@@ -74,32 +90,33 @@
                text-slate-500 dark:text-slate-400;
     }
 
-    /* Reusable form input / select / textarea base */
+    /* Reusable form input — light bg is subtle gray, not white */
     .form-input {
         @apply w-full px-4 py-2.5 rounded-xl text-sm transition-all duration-200
                focus:outline-none focus:ring-2 focus:ring-teal-500/40
-               bg-white dark:bg-slate-950
-               border border-slate-300 dark:border-white/[0.08]
+               bg-slate-50 dark:bg-slate-950
+               border border-slate-200 dark:border-white/[0.08]
                text-slate-900 dark:text-white
-               placeholder-slate-400 dark:placeholder-slate-500;
+               placeholder-slate-400 dark:placeholder-slate-500
+               shadow-sm;
     }
 
-
-    /* ── Light mode defaults ── */
+    /* ── Light mode base ── */
     html {
-        background-color: #f1f5f9;
+        /* Cool blue-gray — never pure white */
+        background-color: #eef2f7;
         color: #0f172a;
     }
 
-    /* ── Dark mode overrides ── */
+    /* ── Dark mode ── */
     html.dark {
         background-color: #020617;
         color: #f1f5f9;
     }
 
-    /* ─── Prose (Tailwind Typography) customisation ──────────────── */
+    /* ─── Prose (Tailwind Typography) ───────────────────────────── */
     .prose {
-        --tw-prose-body:         #1e293b;
+        --tw-prose-body:         #334155;
         --tw-prose-headings:     #0d9488;
         --tw-prose-bullets:      #0d9488;
         --tw-prose-bold:         #0f172a;
