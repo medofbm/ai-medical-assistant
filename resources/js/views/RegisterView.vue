@@ -126,7 +126,7 @@
             <label for="reg-name" class="block text-xs font-semibold uppercase tracking-wide mb-2
                                          text-slate-500 dark:text-slate-400">{{ t.fullName }}</label>
             <input id="reg-name" v-model="form.name" type="text" required autocomplete="name"
-              :placeholder="isRtl ? 'محمد أحمد' : 'Jane Doe'"
+              :placeholder="isRtl ? 'محمد احمد' : 'Mohamed Ahmed'"
               :class="inputCls" />
           </div>
 
