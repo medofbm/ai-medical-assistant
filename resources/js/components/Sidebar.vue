@@ -13,15 +13,7 @@
     <div class="flex items-center justify-between px-4 py-3.5 shrink-0
                 border-b border-[#dde3ea] dark:border-white/[0.06]
                 bg-white dark:bg-slate-900/0">
-      <div class="flex items-center gap-2">
-        <div class="w-7 h-7 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500
-                    flex items-center justify-center shadow-lg shadow-teal-500/30 shrink-0">
-          <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </div>
-        <span class="font-bold text-xs tracking-tight text-slate-900 dark:text-white">{{ t.appName }}</span>
-      </div>
+      <AppLogo size="sm" :dark="isDark" />
 
       <div class="flex items-center gap-1">
         <!-- Language Toggle -->
@@ -194,6 +186,7 @@ import { authStore } from '@/stores/auth';
 import { useTheme } from '@/composables/useTheme';
 import { useLang } from '@/composables/useLang';
 import apiClient from '@/api/axios';
+import AppLogo   from '@/components/AppLogo.vue';
 
 const props = defineProps({
     sessions:        { type: Array,   default: () => [] },

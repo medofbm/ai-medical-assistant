@@ -13,26 +13,25 @@
            style="background-image:linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);background-size:40px 40px"></div>
 
       <!-- Logo -->
-      <div class="relative z-10 flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-teal-500 to-blue-600 flex items-center justify-center shadow-xl shadow-teal-500/30">
-          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </div>
-        <span class="text-white font-bold text-lg tracking-tight">{{ t.appName }}</span>
+      <div class="relative z-10 flex items-center"
+           :class="lang === 'ar' ? 'self-end' : ''">
+        <AppLogo size="lg" :dark="true" />
       </div>
 
       <!-- Hero -->
-      <div class="relative z-10 flex-1 flex flex-col justify-center py-16">
-        <h1 class="text-5xl font-extrabold text-white leading-[1.1] tracking-tight mb-5"
+      <div class="relative z-10 flex-1 flex flex-col justify-center py-16"
+           :class="lang === 'ar' ? 'items-end' : 'items-start'">
+        <h1 dir="auto"
+            class="text-5xl font-extrabold text-white leading-[1.4] tracking-tight mb-5"
             :class="lang === 'ar' ? 'text-right' : 'text-left'">
-          {{ t.registerHeroLine1 }}<br/>
-          <span class="bg-gradient-to-r from-teal-400 to-blue-400 bg-clip-text text-transparent">
-            {{ t.registerHeroLine2 }}
-          </span>
+            {{ t.loginHeroLine1 }}<br/>
+            <span class="bg-gradient-to-r from-teal-400 to-blue-400 bg-clip-text text-transparent font-bold">
+                {{ t.loginHeroLine3 }}
+            </span>
         </h1>
-        <p class="text-slate-400 text-base leading-relaxed max-w-xs mb-10"
-           :class="lang === 'ar' ? 'text-right' : 'text-left'">
+        <p dir="auto"
+           class="text-slate-400 text-base leading-relaxed mb-10"
+           :class="lang === 'ar' ? 'text-right max-w-sm' : 'text-left max-w-xs'">
           {{ t.registerSubtitle }}
         </p>
 
@@ -61,13 +60,8 @@
                 bg-white dark:bg-slate-950 transition-colors duration-300">
 
       <!-- Mobile logo -->
-      <div class="lg:hidden flex items-center gap-2 mb-8">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-teal-500 to-blue-600 flex items-center justify-center shadow-lg shadow-teal-500/30">
-          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </div>
-        <span class="font-bold text-slate-900 dark:text-white text-base">{{ t.appName }}</span>
+      <div class="lg:hidden mb-8">
+        <AppLogo size="md" :dark="isDark" />
       </div>
 
       <!-- Controls -->
@@ -97,9 +91,9 @@
       </div>
 
       <div class="w-full max-w-sm">
-        <div class="mb-6">
-          <h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">{{ t.registerTitle }}</h2>
-          <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">{{ t.registerSubtitle }}</p>
+        <div class="mb-6" :class="isRtl ? 'text-right' : 'text-left'">
+          <h2 dir="auto" class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">{{ t.registerTitle }}</h2>
+          <p dir="auto" class="text-slate-500 dark:text-slate-400 text-sm mt-1">{{ t.registerSubtitle }}</p>
         </div>
 
         <!-- Error -->
@@ -191,6 +185,7 @@ import { useRouter } from 'vue-router';
 import { authStore }  from '@/stores/auth';
 import { useTheme }   from '@/composables/useTheme';
 import { useLang }    from '@/composables/useLang';
+import AppLogo        from '@/components/AppLogo.vue';
 
 const router  = useRouter();
 const loading = ref(false);

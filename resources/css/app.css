@@ -24,12 +24,20 @@
         scrollbar-width: thin;
         scrollbar-color: rgba(148, 163, 184, 0.5) transparent;
     }
-    .scrollbar-thin::-webkit-scrollbar          { width: 4px; }
-    .scrollbar-thin::-webkit-scrollbar-track    { background: transparent; }
-    .scrollbar-thin::-webkit-scrollbar-thumb    {
+
+    .scrollbar-thin::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .scrollbar-thin::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .scrollbar-thin::-webkit-scrollbar-thumb {
         background-color: rgba(148, 163, 184, 0.5);
         border-radius: 2px;
     }
+
     .scrollbar-thin::-webkit-scrollbar-thumb:hover {
         background-color: rgba(100, 116, 139, 0.7);
     }
@@ -38,20 +46,37 @@
     .dot-bounce {
         animation: dotBounce 1.2s ease-in-out infinite;
     }
-    .dot-bounce-2 { animation-delay: 0.2s; }
-    .dot-bounce-3 { animation-delay: 0.4s; }
+
+    .dot-bounce-2 {
+        animation-delay: 0.2s;
+    }
+
+    .dot-bounce-3 {
+        animation-delay: 0.4s;
+    }
 
     @keyframes dotBounce {
-        0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-        30%            { transform: translateY(-6px); opacity: 1; }
+
+        0%,
+        60%,
+        100% {
+            transform: translateY(0);
+            opacity: 0.4;
+        }
+
+        30% {
+            transform: translateY(-6px);
+            opacity: 1;
+        }
     }
 
     /* ── Light-mode card elevation ── */
     .card-light {
         background: #ffffff;
         border: 1px solid #e2e8f0;
-        box-shadow: 0 1px 3px rgba(15,23,42,0.06), 0 6px 24px rgba(15,23,42,0.04);
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 6px 24px rgba(15, 23, 42, 0.04);
     }
+
     /* Light-mode sidebar feel */
     .sidebar-light {
         background: #f8fafc;
@@ -61,15 +86,21 @@
 
 /* ─── Base Styles ────────────────────────────────────────────────── */
 @layer base {
-    html, body {
+
+    html,
+    body {
         height: 100%;
     }
+
     #app {
         min-height: 100%;
         display: flex;
         flex-direction: column;
     }
-    * { box-sizing: border-box; }
+
+    * {
+        box-sizing: border-box;
+    }
 
     /* Arabic typography */
     :root[lang="ar"] {
@@ -77,28 +108,27 @@
     }
 
     /* Prevent textarea showing scrollbar when auto-resizing */
-    textarea { overflow: hidden; }
+    textarea {
+        overflow: hidden;
+    }
+
     textarea.overflow-y-auto,
-    textarea.resize-none  { overflow: auto; }
+    textarea.resize-none {
+        overflow: auto;
+    }
 }
 
 /* ─── Component Utilities ────────────────────────────────────────── */
 @layer components {
+
     /* Reusable form field label */
     .field-label {
-        @apply block text-xs font-semibold uppercase tracking-wide mb-1.5
-               text-slate-500 dark:text-slate-400;
+        @apply block text-xs font-semibold uppercase tracking-wide mb-1.5 text-slate-500 dark:text-slate-400;
     }
 
     /* Reusable form input — light bg is subtle gray, not white */
     .form-input {
-        @apply w-full px-4 py-2.5 rounded-xl text-sm transition-all duration-200
-               focus:outline-none focus:ring-2 focus:ring-teal-500/40
-               bg-slate-50 dark:bg-slate-950
-               border border-slate-200 dark:border-white/[0.08]
-               text-slate-900 dark:text-white
-               placeholder-slate-400 dark:placeholder-slate-500
-               shadow-sm;
+        @apply w-full px-4 py-2.5 rounded-xl text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500/40 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-white/[0.08] text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 shadow-sm;
     }
 
     /* ── Light mode base ── */
@@ -116,23 +146,24 @@
 
     /* ─── Prose (Tailwind Typography) ───────────────────────────── */
     .prose {
-        --tw-prose-body:         #334155;
-        --tw-prose-headings:     #0d9488;
-        --tw-prose-bullets:      #0d9488;
-        --tw-prose-bold:         #0f172a;
-        --tw-prose-links:        #0d9488;
-        --tw-prose-code:         #0f172a;
-        --tw-prose-pre-bg:       #f1f5f9;
-        --tw-prose-hr:           #e2e8f0;
+        --tw-prose-body: #334155;
+        --tw-prose-headings: #0d9488;
+        --tw-prose-bullets: #0d9488;
+        --tw-prose-bold: #0f172a;
+        --tw-prose-links: #0d9488;
+        --tw-prose-code: #0f172a;
+        --tw-prose-pre-bg: #f1f5f9;
+        --tw-prose-hr: #e2e8f0;
     }
+
     .dark .prose {
-        --tw-prose-body:         #cbd5e1;
-        --tw-prose-headings:     #2dd4bf;
-        --tw-prose-bullets:      #2dd4bf;
-        --tw-prose-bold:         #f1f5f9;
-        --tw-prose-links:        #2dd4bf;
-        --tw-prose-code:         #f1f5f9;
-        --tw-prose-pre-bg:       #1e293b;
-        --tw-prose-hr:           #334155;
+        --tw-prose-body: #cbd5e1;
+        --tw-prose-headings: #2dd4bf;
+        --tw-prose-bullets: #2dd4bf;
+        --tw-prose-bold: #f1f5f9;
+        --tw-prose-links: #2dd4bf;
+        --tw-prose-code: #f1f5f9;
+        --tw-prose-pre-bg: #1e293b;
+        --tw-prose-hr: #334155;
     }
 }

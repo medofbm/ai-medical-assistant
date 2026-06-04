@@ -17,42 +17,42 @@
            style="background-image:linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);background-size:40px 40px"></div>
 
       <!-- Logo -->
-      <div class="relative z-10 flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-teal-500 to-blue-600 flex items-center justify-center shadow-xl shadow-teal-500/30">
-          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </div>
-        <span class="text-white font-bold text-lg tracking-tight">{{ t.appName }}</span>
+      <div class="relative z-10 flex items-center"
+           :class="lang === 'ar' ? 'self-end' : ''">
+        <AppLogo size="lg" :dark="true" />
       </div>
 
       <!-- Hero content -->
-      <div class="relative z-10 flex-1 flex flex-col justify-center py-16">
+      <div class="relative z-10 flex-1 flex flex-col justify-center py-16"
+           :class="lang === 'ar' ? 'items-end' : 'items-start'">
         <!-- Floating stat cards -->
         <div class="flex flex-col gap-4 mb-12">
           <div v-for="stat in stats" :key="stat.labelKey"
                class="flex items-center gap-4 bg-white/[0.05] backdrop-blur-sm border border-white/[0.08]
-                      rounded-2xl px-5 py-4 w-fit hover:bg-white/[0.08] transition-all duration-300">
+                      rounded-2xl px-5 py-4 w-fit hover:bg-white/[0.08] transition-all duration-300"
+               :class="lang === 'ar' ? 'flex-row-reverse' : ''">
             <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" :class="stat.bg">
               <span class="text-lg">{{ stat.icon }}</span>
             </div>
-            <div>
+            <div :class="lang === 'ar' ? 'text-right' : 'text-left'">
               <p class="text-white font-semibold text-sm">{{ t[stat.valueKey] }}</p>
               <p class="text-slate-400 text-xs">{{ t[stat.labelKey] }}</p>
             </div>
           </div>
         </div>
 
-        <h1 class="text-5xl font-extrabold text-white leading-[1.1] tracking-tight mb-5"
+        <h1 dir="auto"
+            class="text-5xl font-extrabold text-white leading-[1.1] tracking-tight mb-5"
             :class="lang === 'ar' ? 'text-right' : 'text-left'">
           {{ t.loginHeroLine1 }}<br/>
           <span class="bg-gradient-to-r from-teal-400 to-blue-400 bg-clip-text text-transparent">
             {{ t.loginHeroLine2 }}
-          </span><br/>
-          {{ t.loginHeroLine3 }}
+          </span>
+          <template v-if="t.loginHeroLine3"><br/>{{ t.loginHeroLine3 }}</template>
         </h1>
-        <p class="text-slate-400 text-base leading-relaxed max-w-xs"
-           :class="lang === 'ar' ? 'text-right' : 'text-left'">
+        <p dir="auto"
+           class="text-slate-400 text-base leading-relaxed"
+           :class="lang === 'ar' ? 'text-right max-w-sm' : 'text-left max-w-xs'">
           {{ t.loginHeroDesc }}
         </p>
       </div>
@@ -68,13 +68,8 @@
                 bg-white dark:bg-slate-950 transition-colors duration-300">
 
       <!-- Mobile logo -->
-      <div class="lg:hidden flex items-center gap-2 mb-8">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-teal-500 to-blue-600 flex items-center justify-center shadow-lg shadow-teal-500/30">
-          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </div>
-        <span class="font-bold text-slate-900 dark:text-white text-base">{{ t.appName }}</span>
+      <div class="lg:hidden mb-8">
+        <AppLogo size="md" :dark="isDark" />
       </div>
 
       <!-- Top-right controls -->
@@ -106,9 +101,9 @@
 
       <!-- Form card -->
       <div class="w-full max-w-sm">
-        <div class="mb-8">
-          <h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">{{ t.login }}</h2>
-          <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">{{ t.loginSubtitle }}</p>
+        <div class="mb-8" :class="isRtl ? 'text-right' : 'text-left'">
+          <h2 dir="auto" class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">{{ t.login }}</h2>
+          <p dir="auto" class="text-slate-500 dark:text-slate-400 text-sm mt-1">{{ t.loginSubtitle }}</p>
         </div>
 
         <!-- Error alert -->
@@ -208,6 +203,7 @@ import { useRouter } from 'vue-router';
 import { authStore }  from '@/stores/auth';
 import { useTheme }   from '@/composables/useTheme';
 import { useLang }    from '@/composables/useLang';
+import AppLogo        from '@/components/AppLogo.vue';
 
 const router = useRouter();
 const loading = ref(false);
