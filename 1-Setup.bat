@@ -14,14 +14,10 @@ if not exist .env (
 )
 echo.
 
-echo [2/5] Installing PHP Dependencies...
-call composer install --optimize-autoloader --no-dev
-if %errorlevel% neq 0 (
-    echo [ERROR] Composer install failed!
-    pause
-    exit /b 1
-)
+echo [2/5] Clearing old caches...
+call php artisan optimize:clear
 echo.
+
 
 echo [3/5] Generating Application Key...
 call php artisan key:generate --force
