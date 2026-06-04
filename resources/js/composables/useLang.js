@@ -214,7 +214,7 @@ const translations = {
         // Login branding panel
         loginHeroLine1: 'مساعدك الطبي',
         loginHeroLine2: 'بالذكاء الاصطناعي',
-        loginHeroLine3: 'المدعوم بالذكاء الاصطناعي',
+        loginHeroLine3: '',
         loginHeroDesc: 'احصل على إرشادات طبية فورية ومخصصة مدعومة بالذكاء الاصطناعي — متاحة 24/7.',
         statConsultations: 'استشارة ذكاء اصطناعي',
         statConsultValue: '+50,000 مريض',

@@ -22,12 +22,12 @@
       <div class="relative z-10 flex-1 flex flex-col justify-center py-16"
            :class="lang === 'ar' ? 'items-end' : 'items-start'">
         <h1 dir="auto"
-            class="text-5xl font-extrabold text-white leading-[1.4] tracking-tight mb-5"
+            class="text-5xl font-extrabold text-white leading-[1.1] tracking-tight mb-5"
             :class="lang === 'ar' ? 'text-right' : 'text-left'">
-            {{ t.loginHeroLine1 }}<br/>
-            <span class="bg-gradient-to-r from-teal-400 to-blue-400 bg-clip-text text-transparent font-bold">
-                {{ t.loginHeroLine3 }}
-            </span>
+          {{ t.registerHeroLine1 }}<br/>
+          <span class="bg-gradient-to-r from-teal-400 to-blue-400 bg-clip-text text-transparent">
+            {{ t.registerHeroLine2 }}
+          </span>
         </h1>
         <p dir="auto"
            class="text-slate-400 text-base leading-relaxed mb-10"
