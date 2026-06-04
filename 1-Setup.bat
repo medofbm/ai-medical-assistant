@@ -1,11 +1,11 @@
 @echo off
 color 0B
 echo =========================================
-echo   Initializing MediAssist AI Setup...
+echo   Initializing Smart Assistant Setup...
 echo =========================================
 echo.
 
-echo [1/4] Copying environment configuration...
+echo [1/5] Copying environment configuration...
 if not exist .env (
     copy .env.example .env
     echo       .env file created from .env.example.
@@ -14,16 +14,33 @@ if not exist .env (
 )
 echo.
 
-echo [2/4] Installing PHP Dependencies...
+echo [2/5] Installing PHP Dependencies...
 call composer install --optimize-autoloader --no-dev
+if %errorlevel% neq 0 (
+    echo [ERROR] Composer install failed!
+    pause
+    exit /b 1
+)
 echo.
 
-echo [3/4] Generating Application Key...
+echo [3/5] Generating Application Key...
 call php artisan key:generate --force
 echo.
 
-echo [4/4] Running Database Migrations...
-call php artisan migrate:fresh --force
+echo [4/5] Setting up SQLite Database...
+if not exist database\database.sqlite (
+    type nul > database\database.sqlite
+    echo       database.sqlite created.
+) else (
+    echo       database.sqlite already exists, skipping.
+)
+call php artisan migrate --force
+echo.
+
+echo [5/5] Optimizing Application Cache...
+call php artisan config:cache
+call php artisan route:cache
+call php artisan view:cache
 echo.
 
 echo =========================================
