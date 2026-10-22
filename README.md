@@ -48,10 +48,57 @@ routes/
 
 ---
 
+## Netlify frontend + Laravel backend
+
+The backend is included in this repository under `app/`, `routes/api.php`, and
+`database/migrations/`. It uses Laravel 13, Sanctum bearer tokens, and Gemini.
+Netlify hosts the Vue frontend; the Laravel backend requires a PHP host.
+
+Netlify uses `npm run build:netlify` and publishes `dist`. The original
+`npm run build` and `npm run dev` retain the Laravel asset workflow.
+The standalone build excludes `public/` so PHP source is not published.
+
+To connect the application:
+
+1. Deploy this repository's Laravel application on a PHP 8.3+ host with Composer
+   and the PostgreSQL driver. Set the web document root to `public/`.
+2. Configure Laravel's application key, production application URL, database
+   connection, and Gemini key on that backend host. Set `APP_ENV=production` and
+   `APP_DEBUG=false`. Keep all credentials on the backend.
+3. Run `php artisan key:generate` once for a new installation, then
+   `php artisan migrate --force` and `php artisan config:cache` on the backend.
+   Preserve the application key across deployments.
+4. Set `FRONTEND_URL` on the backend to the exact HTTPS frontend origin. The
+   default allows `https://ai-medical-assistan.netlify.app`. No trailing slash.
+5. Set `VITE_API_BASE_URL` in Netlify's build environment to the backend's full
+   HTTPS API base URL, including `/api`, then redeploy the frontend. This is a
+   public URL, not a secret. Never put credentials in a `VITE_` variable.
+6. Verify the backend's `/up` endpoint, then test registration, login, profile
+   updates, and a chat message from the frontend.
+
+Without a backend URL, the frontend can open, but login and chat cannot work;
+requests display a backend connection message instead of calling the static site.
+Production and preview origins must each be explicitly allowed by the backend
+before they can make API requests.
+
+### لو ما عندكش استضافة للباك إند
+
+الباك إند موجود في هذا الريبو ومكتوب بـ Laravel، لكن يحتاج استضافة منفصلة عن
+Netlify. اختَر استضافة تدعم PHP 8.3 أو أحدث، Composer، واتصال PostgreSQL، مع
+إمكانية تشغيل أوامر Artisan وضبط مجلد الموقع على `public/` وتفعيل HTTPS.
+ربط الريبو بـ Netlify وحده لا يشغّل Laravel.
+
+ارفع نفس المشروع للاستضافة، وثبّت اعتمادات الباك إند باستخدام
+`composer install --no-dev --optimize-autoloader`. اضبط إعداداته من لوحة
+الاستضافة، ثم اتبع خطوات التهيئة والربط أعلاه. لا ترفع ملف `.env` إلى GitHub.
+بعد حصولك على عنوان الباك إند، أضفه مع `/api` في `VITE_API_BASE_URL` على
+Netlify وأعد نشر الواجهة. إلى أن يتم ذلك، الواجهة جاهزة للنشر لكن تسجيل الدخول
+والمحادثات غير متاحين.
+
 ## Quick Setup
 
 ### 1. Prerequisites
-- PHP 8.2+, Composer, Node.js 20+, PostgreSQL 15+
+- PHP 8.3+, Composer, Node.js 22+, PostgreSQL 15+
 
 ### 2. Install Dependencies
 ```bash

@@ -4,6 +4,7 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
+        "build:netlify": "vite build --mode netlify",
         "dev": "vite"
     },
     "devDependencies": {
