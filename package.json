@@ -4,6 +4,8 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
+        "build:netlify": "vite build --mode netlify",
+        "dev:demo": "vite --mode netlify --host 127.0.0.1",
         "dev": "vite"
     },
     "devDependencies": {

@@ -4,9 +4,11 @@ import vue from '@vitejs/plugin-vue';
 import tailwindcss from '@tailwindcss/vite';
 import { resolve } from 'path';
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
+    // Keep Laravel's asset pipeline, with a standalone entry for Netlify.
+    publicDir: mode === 'netlify' ? false : 'public',
     plugins: [
-        laravel({
+        mode !== 'netlify' && laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
         }),
@@ -30,4 +32,4 @@ export default defineConfig({
             ignored: ['**/storage/framework/views/**'],
         },
     },
-});
+}));
