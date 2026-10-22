@@ -114,6 +114,9 @@
           </div>
         </Transition>
 
+        <a href="/chat/101?demo=1" class="block mb-5 rounded-xl border border-teal-300 dark:border-teal-700 bg-teal-50 dark:bg-teal-950/50 px-4 py-3 text-center text-sm font-semibold text-teal-800 dark:text-teal-200 hover:bg-teal-100 dark:hover:bg-teal-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-500">
+          {{ lang === 'ar' ? 'ادخل للعرض التجريبي — بدون حساب' : 'Explore portfolio demo — no account needed' }}
+        </a>
         <form @submit.prevent="handleRegister" class="space-y-4" id="register-form">
           <!-- Name -->
           <div>

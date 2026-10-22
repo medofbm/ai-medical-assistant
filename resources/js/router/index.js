@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { authStore } from '@/stores/auth';
+import { isDemo } from '@/demo/preview';
 
 const routes = [
     {
@@ -50,6 +51,9 @@ const router = createRouter({
 
 // Global navigation guard
 router.beforeEach((to, _from) => {
+    if (isDemo && to.query.demo !== '1') {
+        return { path: to.path, query: { ...to.query, demo: '1' }, hash: to.hash };
+    }
     const isAuth = authStore.isAuthenticated();
 
     if (to.meta.requiresAuth && !isAuth) {

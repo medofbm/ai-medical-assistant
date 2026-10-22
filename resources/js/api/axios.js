@@ -1,6 +1,8 @@
 import axios from 'axios';
+import { isDemo, createDemoAdapter } from '@/demo/preview';
 
 const apiClient = axios.create({
+    ...(isDemo ? { adapter: createDemoAdapter() } : {}),
     baseURL: import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, '') || '/api',
     headers: {
         'Content-Type': 'application/json',
@@ -10,6 +12,7 @@ const apiClient = axios.create({
 
 // Request interceptor: attach the stored auth token automatically.
 apiClient.interceptors.request.use((config) => {
+    if (isDemo) return config;
     if (import.meta.env.MODE === 'netlify' && !import.meta.env.VITE_API_BASE_URL) {
         return Promise.reject(new axios.AxiosError(
             'Backend connection is not configured.',

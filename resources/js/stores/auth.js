@@ -1,12 +1,13 @@
 import { reactive } from 'vue';
 import apiClient from '@/api/axios';
+import { isDemo, createDemoUser } from '@/demo/preview';
 
 // ─── Singleton reactive state ──────────────────────────────────────────────────
 // NOTE: state is NOT wrapped in `readonly()` — the OnboardingModal and ProfileView
 // need to mutate `state.user` directly after a successful PATCH /profile call.
 const state = reactive({
-    user:  JSON.parse(localStorage.getItem('auth_user'))  ?? null,
-    token: localStorage.getItem('auth_token') ?? null,
+    user: isDemo ? createDemoUser() : JSON.parse(localStorage.getItem('auth_user')) ?? null,
+    token: isDemo ? null : localStorage.getItem('auth_token') ?? null,
 });
 
 /**
@@ -34,6 +35,10 @@ async function login(payload) {
  * Always clears local state, even if the API call fails.
  */
 async function logout() {
+    if (isDemo) {
+        window.location.assign('/login');
+        return;
+    }
     try {
         await apiClient.post('/auth/logout');
     } finally {
@@ -42,7 +47,7 @@ async function logout() {
 }
 
 function isAuthenticated() {
-    return !!state.token;
+    return isDemo || !!state.token;
 }
 
 /**
@@ -53,7 +58,7 @@ function isAuthenticated() {
 function updateUser(updatedUser) {
     // Replace the whole user object so all reactive consumers re-render
     state.user = { ...state.user, ...updatedUser };
-    localStorage.setItem('auth_user', JSON.stringify(state.user));
+    if (!isDemo) localStorage.setItem('auth_user', JSON.stringify(state.user));
 }
 
 function _persist(token, user) {
